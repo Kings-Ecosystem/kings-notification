@@ -1,16 +1,16 @@
 export interface INotification {
-    id: string;
-    academic_year?: string
-    app_url: string,
-    sender: {
-        email: string
-    },
+    // id: string;
+    // academic_year?: string
+    // app_url: string,
+    // sender: {
+    //     email: string
+    // },
     owner: {
         email: string,
         address: string,
         phone: string
     },
-    school_logo: string,
+    // school_logo: string,
     receipient: {
         name: string,
         email: string,
