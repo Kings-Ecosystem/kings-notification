@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Sse, Post, Body, Res, MessageEvent, Param } from '@nestjs/common';
 import { Observable, interval, of } from 'rxjs';
 import { map } from 'rxjs/operators';
