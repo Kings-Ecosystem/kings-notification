@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { INotification } from 'src/models/interfaces/notification.interface';
 import { RedisService } from 'src/cache/redis/redis.service';
@@ -13,11 +14,11 @@ export class NotificationsService {
 
     async pull(): Promise<INotification> {
         const cache = RedisService.client;
-        let res = await cache.get("message");
+        const res = await cache.get("message");
         return JSON.parse(res);
     }
 
-     async sendEmail(payload: INotification) {
-
-  }
+    async sendEmail(payload: INotification) {
+        return payload;
+    }
 }

@@ -15,4 +15,31 @@ export enum MICROSERVICE_EVENTS {
     PRODUCTS_STATS = "PRODUCTS_STATS",
     CUSTOMER_STATS = "CUSTOMER_STATS",
     EMPLOYEE_STATS = "EMPLOYEE_STATS"
-} 
+}
+
+export const MicroServices = {
+    CORE: {
+        PORT: 7000,
+        NAME: 'CORE'
+    },
+    NOTIFICATIONS: {
+        PORT: 7001,
+        NAME: 'NOTIFICATIONS'
+    },
+    REPORTING: {
+        PORT: 7002,
+        NAME: 'REPORTING'
+    },
+    LOGGER: {
+        PORT: 7003,
+        NAME: 'LOGGER'
+    },
+    AUTHZ: {
+        PORT: 7004,
+        NAME: 'AUTHZ'
+    },
+    FILES: {
+        PORT: 7005,
+        NAME: 'FILES'
+    }
+}

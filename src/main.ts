@@ -1,6 +1,8 @@
+/* eslint-disable prettier/prettier */
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { MicroServices } from './common/constants/microservice.constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -8,8 +10,8 @@ async function bootstrap() {
   const microserviceInstance = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
     transport: Transport.TCP,
     options: {
-      host: 'notifications',
-      port: 7001,
+      host: MicroServices.NOTIFICATIONS.NAME,
+      port: MicroServices.NOTIFICATIONS.PORT,
       retryAttempts: 10
     },
   });
