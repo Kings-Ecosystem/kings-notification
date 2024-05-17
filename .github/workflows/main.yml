@@ -62,6 +62,7 @@ jobs:
           script: |
             cd /home/kingsschool-soft
             docker pull kambang/kingscorp:notification
+            docker compose down -v --remove-orphans
             docker compose up -d
         
       
