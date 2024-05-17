@@ -57,15 +57,15 @@ export class NotificationsService {
 }
 function getMessageDestination(payload: any) {
     const templates = {
-        kingsschoolAdminAccount: KingsSchoolEmailTemplates.adminAccount(payload),
-        kingscorpAdminAccount: KingsCorpEmailTemplates.adminAccount(payload),
-        kingscorpPersonnelAccount: KingsCorpEmailTemplates.personnelAccount(payload, payload.organization),
-        kingscorpResetPassword: KingsCorpEmailTemplates.resetPassword(payload.data)
+        kingsschoolAdminAccount: KingsSchoolEmailTemplates.adminAccount,
+        kingscorpAdminAccount: KingsCorpEmailTemplates.adminAccount,
+        kingscorpPersonnelAccount: KingsCorpEmailTemplates.personnelAccount,
+        kingscorpResetPassword: KingsCorpEmailTemplates.resetPassword
     }
     return {
         to: payload.to,
         subject: payload.subject,
-        text: templates[payload.template],
+        text: templates[payload.template](payload),
     }
 }
 
