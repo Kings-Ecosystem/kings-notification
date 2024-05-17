@@ -14,9 +14,15 @@ export class NotificationsController {
 
     constructor(private notificationsService: NotificationsService) { }
 
-    @Post("send")
-    async sendEmail(@Body() payload: any, @Res() res: Response) {
-        const response = await this.notificationsService.sendEmail(payload);
+    @EventPattern(MICROSERVICE_EVENTS.SEND_USER_EMAIL)
+    async sendUserEmail(@Body() payload: any, @Res() res: Response) {
+        const response =  await this.notificationsService.sendEmail(payload);
+        res.status(200).send(response)
+    }
+
+    @EventPattern(MICROSERVICE_EVENTS.PRODUCT_THRESHOLD_REACHED)
+    async sendEmailToOrgAdmin(@Body() payload: any, @Res() res: Response) {
+        const response =  await this.notificationsService.sendEmail(payload);
         res.status(200).send(response)
     }
 
@@ -26,6 +32,7 @@ export class NotificationsController {
         return res;
     }
 
+    // Cache product threshold message for fast pulling fron frontend notifications
     @EventPattern(MICROSERVICE_EVENTS.PRODUCT_THRESHOLD_REACHED)
     async handler(data: Record<string, any>) {
         await CacheManager.set(data?.organization?.owner_id ?? "notification", data);

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 export interface INotification {
     // id: string;
     // academic_year?: string
