@@ -10,12 +10,12 @@ export const KingsSchoolEmailTemplates = {
     return `Dear <strong>${data.username}</strong>,<br><br>
 
     We're thrilled to welcome you to the Kingsschool Software community!<br><br>
-    Your admin account has been successfully created, and you're now ready to manage your Institution's software needs with ease.<br><br>
+    Your admin account has been successfully created, and you're now ready to manage ${data?.school?.name} with ease.<br><br>
     
-    Kingsschool empowers you to take control of your software fleet, streamline educational processes, and boost productivity.<br><br>
+    Kingsschool empowers you to streamline educational processes, and boost productivity.<br><br>
     As an admin, you have access to powerful features like:<br><br>
     
-    => <strong>User management:</strong> Add, edit, and remove users, assign permissions, and manage user groups.<br><br>
+    => <strong>Schhol Grading/Reports management:</strong> Manage learning grading system and report card generation<br><br>
 
     => <strong>License management:</strong> Allocate and track software licenses, ensuring optimal resource utilization.<br><br>
 

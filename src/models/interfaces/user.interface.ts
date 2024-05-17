@@ -22,6 +22,8 @@ export interface IUser {
     permissions?: string[];
     // This field is needed here because the frontend sends it during account creation
     owner_id?: string;
+    school?: any;
+    academicYear?: any;
     organization?: any;
     org_branch_id?: string;
 }
