@@ -34,13 +34,13 @@ export const KingsSchoolEmailTemplates = {
     <strong>The Kingsschool Software Team</strong><br>
     `;
   },
-  personnelAccount: (data: IPersonnel, org: any) => {
+  personnelAccount: (data: IPersonnel) => {
     return `
 Dear <strong>${data.username}</strong>,<br><br>
 
 We are thrilled to welcome you to Kingsschool Software!<br><br>
 Your account has been successfully created, and we are excited to have you on board.<br><br>
-As an essential member of the <strong>${org.org_name}</strong> team, you play a crucial role in ensuring the smooth operation and success of our Institution.<br><br>
+As an essential member of the <strong>${data.school.name}</strong> team, you play a crucial role in ensuring the smooth operation and success of our Institution.<br><br>
 
 Here are a few key details to help you get started:<br><br>
 
@@ -58,7 +58,7 @@ Here are a few key details to help you get started:<br><br>
    Our user-friendly interface is designed to streamline your tasks and enhance efficiency.<br><br>
 
 => <strong>Support and Resources:</strong> Should you have any questions or encounter any issues, our support team is here to assist you.<br>
-   You can reach out to <strong>${org.org_email ?? "kingsschoolsoft@gmail.com"}</strong> or <strong>${org.org_tel ?? "(+237) 675 455 860"}</strong> for prompt assistance.<br><br>
+   You can reach out to <strong>${data.school.contact_email ?? "kingsschoolsoft@gmail.com"}</strong> or <strong>${data.school.contact_phone ?? "(+237) 675 455 860"}</strong> for prompt assistance.<br><br>
 
 => <strong>Updates and Announcements:</strong> Stay informed about the latest updates, enhancements, and announcements by regularly checking our <a href="https://kingsschool.com">website</a>.<br><br>
 

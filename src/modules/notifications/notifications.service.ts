@@ -60,6 +60,7 @@ function getMessageDestination(payload: any) {
         kingsschoolAdminAccount: KingsSchoolEmailTemplates.adminAccount,
         kingscorpAdminAccount: KingsCorpEmailTemplates.adminAccount,
         kingscorpPersonnelAccount: KingsCorpEmailTemplates.personnelAccount,
+        kingsschoolPersonnelAccount: KingsSchoolEmailTemplates.personnelAccount,
         kingscorpResetPassword: KingsCorpEmailTemplates.resetPassword
     }
     return {
