@@ -17,7 +17,8 @@ export enum MICROSERVICE_EVENTS {
     EMPLOYEE_STATS = "EMPLOYEE_STATS",
 
     // Kingsschool events
-    SEND_USER_EMAIL="SEND_USER_EMAIL"
+    SEND_USER_EMAIL="SEND_USER_EMAIL",
+    NOTIFICATIONS="NOTIFICATIONS"
 }
 
 export const MicroServices = {

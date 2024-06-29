@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 import { Controller, Sse, Post, Body, MessageEvent, Param } from '@nestjs/common';
-import { Observable, interval } from 'rxjs';
+import { Observable, interval, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NotificationsService } from './notifications.service';
-import { EventPattern } from '@nestjs/microservices';
+import { EventPattern, Payload } from '@nestjs/microservices';
 import { MICROSERVICE_EVENTS } from 'src/common/constants/microservice.constants';
 import { CacheManager } from 'src/cache/redis/cache.utils';
 
@@ -32,6 +32,21 @@ export class NotificationsController {
     @EventPattern(MICROSERVICE_EVENTS.PRODUCT_THRESHOLD_REACHED)
     async handler(data: Record<string, any>) {
         await CacheManager.set(data?.organization?.owner_id ?? "notification", data);
+    }
+
+    @EventPattern(MICROSERVICE_EVENTS.NOTIFICATIONS)
+    async notifHandler(data: Record<string, any>) {
+        const activity = `${data?.data.platform.actionEvent}_${data?.request?.user?.id}`
+        const notification = {
+            [activity]: {
+                [data?.request?.user?.id]: data?.request?.user,
+                data: data?.data,
+                time: new Date()
+            },
+        }
+        await CacheManager.set(
+            data?.request?.user?.owner_id ?? data?.request?.user?.id ?? "notification",
+            notification);
     }
 
     @Sse('pull/:id')
