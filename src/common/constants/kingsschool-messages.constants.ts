@@ -40,19 +40,17 @@ Dear <strong>${data.username}</strong>,<br><br>
 
 We are thrilled to welcome you to Kingsschool Software!<br><br>
 Your account has been successfully created, and we are excited to have you on board.<br><br>
-As an essential member of the <strong>${data.school.name}</strong> team, you play a crucial role in ensuring the smooth operation and success of our Institution.<br><br>
+As an essential member of the <strong>${data.school.name}</strong> team, you play a crucial role in ensuring the smooth operation and success of the Institution.<br><br>
 
 Here are a few key details to help you get started:<br><br>
 
 <strong>Username:</strong> ${data.username}<br>
-<strong>Temporary Password:</strong> ${data.password} - <em>Please change this upon your first login</em><br><br>
+<strong>Password:</strong> ${data.password}<br><br>
 
 <strong>Getting Started:</strong><br><br>
 
-=> <strong>Login:</strong> Visit <a href="https://kingsschool.com/login">kingsschool</a> and enter your username and temporary password to log in for the first time.<br><br>
+=> <strong>Login:</strong> Visit <a href="https://sms.ksoftinc.com/auth/login">kingsschool</a> and enter your username and password to log in for the first time.<br><br>
 
-=> <strong>Change Password:</strong> Upon your first login, you will be prompted to change your password.<br> 
-   Please choose a strong, secure password that you can easily remember.<br><br>
 
 => <strong>Explore Features:</strong> Familiarize yourself with the various features and functionalities available to you within Kingsschool Software.<br>
    Our user-friendly interface is designed to streamline your tasks and enhance efficiency.<br><br>
@@ -60,7 +58,7 @@ Here are a few key details to help you get started:<br><br>
 => <strong>Support and Resources:</strong> Should you have any questions or encounter any issues, our support team is here to assist you.<br>
    You can reach out to <strong>${data.school.contact_email ?? "kingsschoolsoft@gmail.com"}</strong> or <strong>${data.school.contact_phone ?? "(+237) 675 455 860"}</strong> for prompt assistance.<br><br>
 
-=> <strong>Updates and Announcements:</strong> Stay informed about the latest updates, enhancements, and announcements by regularly checking our <a href="https://kingsschool.com">website</a>.<br><br>
+=> <strong>Updates and Announcements:</strong> Stay informed about the latest updates, enhancements, and announcements by regularly checking our <a href="https://ksoftinc.com">website</a>.<br><br>
 
 Sincerely,<br>
     
