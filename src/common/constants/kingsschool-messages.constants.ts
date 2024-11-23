@@ -97,5 +97,17 @@ Sincerely,<br>
 
     <strong>The Kingsschool Software Team</strong>
     `
+  },
+  passwordResetSuccess: (payload: IResetPassord) => {
+    return `
+    Hi <strong>${payload.username}</strong>,<br><br>
+
+    Your password has been successfully reset.<br><br>
+    Please use the new password to login to your account.<br><br>
+
+    Sincerely,<br>
+
+    <strong>The Kingsschool Software Team</strong>
+    `
   }
 };
