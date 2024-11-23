@@ -85,5 +85,17 @@ Sincerely,<br>
 
     <strong>The Kingsschool Software Team</strong>
     `
+  },
+  userAccountInfoUpdate: (payload: IUser) => {
+    return `
+    Hi <strong>${payload.username}</strong>,<br><br>
+
+    We are writing to inform you that your account information has been updated.<br><br>
+    If you didn't make this change, please contact us immediately at <strong>${payload?.school?.contact_email ?? "kingsschoolsoft@gmail.com"}</strong>.<br><br>
+
+    Sincerely,<br>
+
+    <strong>The Kingsschool Software Team</strong>
+    `
   }
 };
