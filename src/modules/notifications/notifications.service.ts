@@ -13,10 +13,15 @@ export class NotificationsService {
 
     constructor() {
         this.transporter = nodemailer.createTransport({
-            service: process.env.MAIL_SERVICE ?? 'gmail',
+            host: process.env.MAIL_SERVICE ?? 'smtp.gmail.com',
+            port: process.env.MAIL_SERVICE_PORT ?? 465,
+            secure: false,
             auth: {
                 user: process.env.MAIL_SERVICE_USER ?? 'kingssoft@example.com',
-                pass: process.env.MAIL_SERVICE_PASS ?? 'password'
+                pass: process.env.MAIL_SERVICE_PASS ?? 'password',
+            },
+            tls: {
+                rejectUnauthorized: false
             }
         });
     }
@@ -69,7 +74,7 @@ function getMessageDestination(payload: any) {
     return {
         to: payload.to,
         subject: payload.subject,
-        text: templates[payload.template](payload),
+        text: payload.html ? payload.html : templates[payload.template](payload),
     }
 }
 
