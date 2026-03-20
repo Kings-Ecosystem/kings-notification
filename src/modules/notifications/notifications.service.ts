@@ -5,6 +5,7 @@ import { RedisService } from 'src/cache/redis/redis.service';
 import * as nodemailer from "nodemailer";
 import { KingsSchoolEmailTemplates } from 'src/common/constants/kingsschool-messages.constants';
 import { KingsCorpEmailTemplates } from 'src/common/constants/kingscorp-messages.constants';
+import { Resend } from 'resend';
 
 @Injectable()
 export class NotificationsService {
@@ -47,17 +48,21 @@ export class NotificationsService {
             html: email.text
         };
 
-        const result = this.transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log(error);
-                return false;
-            } else {
-                console.log('Email sent: ' + info.response);
-                return true;
-            }
-        });
+        // const result = this.transporter.sendMail(mailOptions, function (error, info) {
+        //     if (error) {
+        //         console.log(error);
+        //         return false;
+        //     } else {
+        //         console.log('Email sent: ' + info.response);
+        //         return true;
+        //     }
+        // });
 
-        return result;
+        // return result;
+
+
+        const resend = new Resend(process.env.RESEND_API_KEY ?? '');
+        resend.emails.send(mailOptions);
     }
 }
 function getMessageDestination(payload: any) {
@@ -69,7 +74,7 @@ function getMessageDestination(payload: any) {
         kingsschoolPasswordResetSuccess: KingsSchoolEmailTemplates.passwordResetSuccess,
         kingscorpAdminAccount: KingsCorpEmailTemplates.adminAccount,
         kingscorpPersonnelAccount: KingsCorpEmailTemplates.personnelAccount,
-        kingscorpResetPassword: KingsCorpEmailTemplates.resetPassword,  
+        kingscorpResetPassword: KingsCorpEmailTemplates.resetPassword,
     }
     return {
         to: payload.to,

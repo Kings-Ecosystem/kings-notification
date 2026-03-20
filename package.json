@@ -29,6 +29,7 @@
     "nodemailer": "^6.9.13",
     "redis": "^4.0.3",
     "reflect-metadata": "^0.1.13",
+    "resend": "^6.9.4",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"
   },
