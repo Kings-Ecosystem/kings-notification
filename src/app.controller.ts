@@ -10,4 +10,14 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Get('healthz')
+  liveness() {
+    return { status: 'ok', service: 'kings-notification' };
+  }
+
+  @Get('readyz')
+  readiness() {
+    return { status: 'ready', service: 'kings-notification' };
+  }
 }

@@ -42,7 +42,7 @@ Your account has been successfully created, and we are excited to have you on bo
 Here are a few key details to help you get started:<br><br>
 
 <strong>Username:</strong> ${data.username}<br>
-<strong>Password:</strong> ${data.password}<br><br>
+<strong>Password:</strong> Use the password reset link from your administrator. Do not share credentials.<br><br>
 
 <strong>Getting Started:</strong><br><br>
 

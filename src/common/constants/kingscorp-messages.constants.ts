@@ -44,7 +44,7 @@ As an essential member of the <strong>${org.org_name}</strong> team, you play a 
 Here are a few key details to help you get started:<br><br>
 
 <strong>Username:</strong> ${data.username}<br>
-<strong>Temporary Password:</strong> ${data.password} - <em>Please change this upon your first login</em><br><br>
+<strong>Temporary Password:</strong> Use the password reset flow on first login. Do not share credentials.<br><br>
 
 <strong>Getting Started:</strong><br><br>
 

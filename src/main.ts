@@ -3,14 +3,14 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { MicroServices } from './common/constants/microservice.constants';
+import { RequestMethod } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  // Spin up the Microservice instance
   const microserviceInstance = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
     transport: Transport.TCP,
     options: {
-      host: MicroServices.NOTIFICATIONS.NAME,
+        host: process.env.MICROSERVICE_HOST || '0.0.0.0',
       port: MicroServices.NOTIFICATIONS.PORT,
       retryAttempts: 10
     },
@@ -18,11 +18,15 @@ async function bootstrap() {
 
   app.enableCors();
 
-  app.setGlobalPrefix("/api/v1/rt");
+  app.setGlobalPrefix("/api/v1/rt", {
+    exclude: [
+      { path: 'healthz', method: RequestMethod.GET },
+      { path: 'readyz', method: RequestMethod.GET },
+    ],
+  });
 
+  app.enableShutdownHooks();
   await app.listen(3000);
-
-  // start the microservice instance
   await microserviceInstance.listen();
 }
 bootstrap();
