@@ -1,0 +1,105 @@
+name: Kings Notification CI
+
+on:
+  push:
+    branches: [main, master, staging]
+  pull_request:
+    branches: [main, master, staging]
+
+env:
+  DOCKER_IMAGE: kambang/kingscorp
+  TAG_PREFIX: notification
+  SERVICE_NAME: notifications
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint
+        continue-on-error: true
+        run: npx eslint "{src,apps,libs,test}/**/*.ts"
+
+      - name: npm audit
+        continue-on-error: true
+        run: npm audit --audit-level=high
+
+  build-and-push:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+    needs: quality
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Extract metadata
+        id: meta
+        run: |
+          BRANCH=${GITHUB_REF#refs/heads/}
+          DEPLOY_BRANCH="$BRANCH"
+          if [ "$BRANCH" = "master" ]; then DEPLOY_BRANCH="main"; fi
+          SHA_SHORT=$(echo "$GITHUB_SHA" | cut -c1-7)
+          echo "deploy_branch=$DEPLOY_BRANCH" >> "$GITHUB_OUTPUT"
+          {
+            echo "tags<<EOF"
+            if [ "$DEPLOY_BRANCH" = "staging" ]; then
+              echo "${{ env.DOCKER_IMAGE }}:${{ env.TAG_PREFIX }}-staging-${SHA_SHORT}"
+              echo "${{ env.DOCKER_IMAGE }}:${{ env.TAG_PREFIX }}-staging-latest"
+            else
+              echo "${{ env.DOCKER_IMAGE }}:${{ env.TAG_PREFIX }}-main-${SHA_SHORT}"
+              echo "${{ env.DOCKER_IMAGE }}:${{ env.TAG_PREFIX }}-main-latest"
+              echo "${{ env.DOCKER_IMAGE }}:${{ env.TAG_PREFIX }}"
+            fi
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  trigger-deploy:
+    name: Trigger Orchestrator Deploy
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    if: github.event_name == 'push'
+    steps:
+      - name: Resolve deploy branch
+        id: branch
+        run: |
+          BRANCH=${GITHUB_REF#refs/heads/}
+          if [ "$BRANCH" = "master" ]; then BRANCH="main"; fi
+          echo "name=$BRANCH" >> "$GITHUB_OUTPUT"
+
+      - uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.ORCHESTRATOR_PAT }}
+          repository: KambangSinclaire/kingsschool-soft
+          event-type: service-updated
+          client-payload: |
+            {
+              "service": "${{ env.SERVICE_NAME }}",
+              "image": "${{ env.DOCKER_IMAGE }}",
+              "branch": "${{ steps.branch.outputs.name }}",
+              "sha": "${{ github.sha }}"
+            }
