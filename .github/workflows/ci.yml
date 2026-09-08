@@ -91,6 +91,15 @@ jobs:
           if [ "$BRANCH" = "master" ]; then BRANCH="main"; fi
           echo "name=$BRANCH" >> "$GITHUB_OUTPUT"
 
+      - name: Require ORCHESTRATOR_PAT
+        env:
+          ORCHESTRATOR_PAT: ${{ secrets.ORCHESTRATOR_PAT }}
+        run: |
+          if [ -z "$ORCHESTRATOR_PAT" ]; then
+            echo "::error::Missing Actions secret ORCHESTRATOR_PAT. Default GITHUB_TOKEN cannot dispatch to KambangSinclaire/kingsschool-soft. Add a classic PAT (repo scope) as ORCHESTRATOR_PAT — see kingsschool-soft/SECRETS.md."
+            exit 1
+          fi
+
       - uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.ORCHESTRATOR_PAT }}
